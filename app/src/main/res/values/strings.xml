@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Android Final Projects</string>
+    <string name="hello_message">Hello world!</string>
+    <string name="button_message">I\'m a button</string>
+
+    <string name="time">Time is money</string>
+    <string name="enterpassword">Passowrd</string>
+    <string name="type_here">type here</string>
+    <string name="button">Send</string>
+    <string name="receive">Receive</string>
+    <string name="message_goes_here1">message1</string>
+    <string name="message1">message goes here</string>
+    <string name="message">message_goes_here</string>
+    <string name="message_goes_here">message</string>
+    <string name="time_goes_here">time</string>
+    <string name="hello">hello</string>
+    <string name="sendMess">send receive goes here</string>
+    <string name="Database">Database id goes here</string>
+
+
+</resources>
