@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.Button;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import android.view.View;
@@ -33,6 +35,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import android.widget.ImageView;
+import com.example.final_project.databinding.ActivityWeatherBinding;
+import com.example.final_project.R;
 public class WeatherActivity extends AppCompatActivity implements WeatherDataListener {
     private EditText searchEditText;
     private TextView cityTextView;
@@ -44,6 +48,8 @@ public class WeatherActivity extends AppCompatActivity implements WeatherDataLis
     private TextView searchResultsTextView;
     private RecyclerView weatherRecyclerView;
 
+    private List<WeatherData> weatherDataList = new ArrayList<>();
+private ActivityWeatherBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +58,17 @@ public class WeatherActivity extends AppCompatActivity implements WeatherDataLis
         weatherRecyclerView = findViewById(R.id.result_list);
         weatherRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+
+
+
+
+
         weatherIconImageView = findViewById(R.id.weatherIconImageView);
 
 
 
-        searchEditText = findViewById(R.id.search_edit_text);
+       searchEditText = findViewById(R.id.search_edit_text);
         cityTextView = findViewById(R.id.city_text_view);
         temperatureTextView = findViewById(R.id.temperature_text_view);
         weatherConditionTextView = findViewById(R.id.weather_condition_text_view);
@@ -65,7 +77,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherDataLis
 
         weatherAPI = new WeatherAPI(this);
 
-        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+  /*      searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -75,7 +87,9 @@ public class WeatherActivity extends AppCompatActivity implements WeatherDataLis
                 }
                 return false;
             }
-        });
+
+        });*/
+
 
         WeatherData savedWeatherData = weatherAPI.getSavedWeatherData();
         if (savedWeatherData != null) {
@@ -91,6 +105,23 @@ public class WeatherActivity extends AppCompatActivity implements WeatherDataLis
                 weatherAPI.getWeatherDataForCity(cityName, (WeatherDataListener) WeatherActivity.this);
             }
         });
+        Button saveButton = findViewById(R.id.Savebutton);
+        saveButton.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick (View v){
+                String cityName = searchEditText.getText().toString();
+                weatherAPI.getWeatherDataForCity(cityName, (WeatherDataListener) WeatherActivity.this);
+
+            }
+        });
+        WeatherDataAdapter adapter = new WeatherDataAdapter();
+        weatherRecyclerView.setAdapter(new WeatherDataAdapter());
+
+
+
+
     }
 
 
@@ -98,7 +129,11 @@ public class WeatherActivity extends AppCompatActivity implements WeatherDataLis
 
     @Override
     public void onDataReceived(WeatherData weatherData) {
+        weatherDataList.add(weatherData);
         updateWeatherData(weatherData);
+        weatherRecyclerView.getAdapter().notifyDataSetChanged();
+        ((WeatherDataAdapter) weatherRecyclerView.getAdapter()).updateData(weatherDataList);
+        //updateWeatherData(weatherData);
     }
 
     @Override
@@ -125,43 +160,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherDataLis
 
 
 
-    /*private Button weather;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather);
 
-        weather = findViewById(R.id.search_button);
 
-        weather.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getWeather("London", "your_api_key_here");
-            }
-        });
-    }
-
-    public void getWeather(String location, String apiKey) {
-        String url = "http://api.weatherstack.com/current?access_key=" + apiKey + "&query=" + location;
-
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseData = response.body().string();
-                Log.d("Weather data", responseData);
-            }
-        });
-    }*/
 }

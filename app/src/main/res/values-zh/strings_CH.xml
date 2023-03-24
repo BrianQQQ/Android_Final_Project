@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">安卓最终课题</string>
+    <string name="hello_message">你好!</string>
+    <string name="button_message">按钮</string>
+
+    <string name="time">时间就是金钱</string>
+    <string name="enterpassword">密码</string>
+    <string name="type_here">在这里输入</string>
+    <string name="button">发送</string>
+    <string name="receive">接收</string>
+    <string name="message_goes_here1">消息1</string>
+    <string name="message1">消息发送至此</string>
+    <string name="message">消息发送至此</string>
+    <string name="message_goes_here">消息</string>
+    <string name="time_goes_here">时间</string>
+    <string name="hello">你好</string>
+    <string name="sendMess">消息</string>
+    <string name="Database">数据库</string>
+
+
+</resources>
