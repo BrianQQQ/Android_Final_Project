@@ -1,9 +1,14 @@
 package com.example.newyorktimesapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -12,10 +17,12 @@ import models.ArticleEntity;
 public class TopicsAdapter extends FavoritesAdapter {
 
     private List<ArticleEntity> articles;
-    private OnFavoriteArticleClickListener onFavoriteArticleClickListener;
+    private OnTopicsArticleClickListener onTopicsArticleClickListener;
 
-    public TopicsAdapter(List<ArticleEntity> articles, OnFavoriteArticleClickListener onFavoriteArticleClickListener) {
-        super(articles, onFavoriteArticleClickListener);
+    public TopicsAdapter(List<ArticleEntity> articles, OnTopicsArticleClickListener onTopicsArticleClickListener) {
+        super(articles, null);
+        this.articles = articles;
+        this.onTopicsArticleClickListener = onTopicsArticleClickListener;
     }
 
     @Override
@@ -28,10 +35,38 @@ public class TopicsAdapter extends FavoritesAdapter {
         holder.deleteFavoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onFavoriteArticleClickListener.onDeleteFavoriteArticleClick(articleEntity);
+                onTopicsArticleClickListener.onDeleteTopicsArticleClick(articleEntity);
             }
         });
 
     }
-}
 
+    public interface OnTopicsArticleClickListener {
+        void onDeleteTopicsArticleClick(ArticleEntity articleEntity);
+    }
+
+    @Override
+    @NonNull
+    public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorites_item, parent, false);
+        return new TopicsArticleViewHolder(view);
+    }
+
+    class TopicsArticleViewHolder extends ArticleViewHolder {
+        public TopicsArticleViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        ArticleEntity articleEntity = articles.get(position);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(articleEntity.url));
+                        itemView.getContext().startActivity(browserIntent);
+                    }
+                }
+            });
+        }
+    }
+}

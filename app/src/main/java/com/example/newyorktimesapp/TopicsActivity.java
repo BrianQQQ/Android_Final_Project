@@ -19,7 +19,7 @@ import models.ArticleEntity;
 
 public class TopicsActivity extends AppCompatActivity {
     RecyclerView topicsRecyclerView;
-    FavoritesAdapter topicsAdapter;
+    TopicsAdapter topicsAdapter;
     private AppDatabase appDatabase;
 
     @Override
@@ -42,9 +42,9 @@ public class TopicsActivity extends AppCompatActivity {
     private void updateTopicsRecyclerView() {
         List<ArticleEntity> favoriteArticles = appDatabase.articleDao().getAllFavoriteArticles();
 
-        topicsAdapter = new FavoritesAdapter(favoriteArticles, new TopicsAdapter.OnFavoriteArticleClickListener() {
+        topicsAdapter = new TopicsAdapter(favoriteArticles, new TopicsAdapter.OnTopicsArticleClickListener() {
             @Override
-            public void onDeleteFavoriteArticleClick(ArticleEntity articleEntity) {
+            public void onDeleteTopicsArticleClick(ArticleEntity articleEntity) {
                 // Remove the article from the favorites list in the database
                 appDatabase.articleDao().deleteFavoriteArticle(articleEntity);
 
@@ -56,7 +56,6 @@ public class TopicsActivity extends AppCompatActivity {
 
         topicsRecyclerView.setAdapter(topicsAdapter);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
