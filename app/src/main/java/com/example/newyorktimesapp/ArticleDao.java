@@ -16,8 +16,12 @@ public interface ArticleDao {
     List<ArticleEntity> getAllFavoriteArticles();
 
     @Insert
-    void insertFavoriteArticle(ArticleEntity article);
+    long insertFavoriteArticle(ArticleEntity article);
 
     @Delete
     void deleteFavoriteArticle(ArticleEntity article);
+
+    @Query("SELECT * FROM favorite_articles WHERE id = :articleId")
+    ArticleEntity getFavoriteArticleById(long articleId);
+
 }

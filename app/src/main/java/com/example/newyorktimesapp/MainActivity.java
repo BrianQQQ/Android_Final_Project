@@ -1,11 +1,13 @@
 package com.example.newyorktimesapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +36,7 @@ import models.ArticleEntity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements ArticleAdapter.OnArticleClickListener, FavoritesAdapter.OnFavoriteArticleClickListener {
 
@@ -45,11 +49,20 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
 
     private AppDatabase appDatabase;
 
+    private static final String SHARED_PREFS = "sharedPrefs";
+    private static final String SEARCH_TERM = "searchTerm";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editTextSearch = findViewById(R.id.search_edit_text);
+
+        // Retrieve the previously saved search term from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String savedSearchTerm = sharedPreferences.getString(SEARCH_TERM, "");
+        editTextSearch.setText(savedSearchTerm);
+
         recyclerView = findViewById(R.id.search_results_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -62,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
             public void onClick(View view) {
                 String searchTerm = editTextSearch.getText().toString();
                 if (!searchTerm.isEmpty()) {
+                    // Save the search term to SharedPreferences
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(SEARCH_TERM, searchTerm);
+                    editor.apply();
+
                     performSearch(searchTerm);
                 }
             }
@@ -86,7 +104,12 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_help:
-                // Show help dialog
+                AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
+                helpDialogBuilder.setTitle("Help")
+                        .setMessage("Enter a search term and tap the search button to see the results.\n\nClick on an article to open it in your browser.\n\nTo save an article to your favorites, click the Add to favorite button.")
+                        .setPositiveButton("OK", null);
+                AlertDialog helpDialog = helpDialogBuilder.create();
+                helpDialog.show();
                 break;
             case R.id.menu_view_topics:
                 Intent topicsIntent = new Intent(MainActivity.this, TopicsActivity.class);
@@ -136,11 +159,40 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
     @Override
     public void onAddFavoriteArticleClick(Article article) {
         // Add the article to the favorites list in the database
-        addArticleToFavorites(article);
+        long insertedArticleId = addArticleToFavorites(article);
 
         // Update the favorites RecyclerView
         updateFavoritesRecyclerView();
+
+        // Show a Toast message
+        Toast.makeText(MainActivity.this, "Article added to favorites", Toast.LENGTH_SHORT).show();
+
+        // Show an AlertDialog
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Article added")
+                .setMessage("The article has been added to your favorites.")
+                .setPositiveButton("OK", null)
+                .show();
+
+        // Show a Snackbar with an undo action
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Article added to favorites", Snackbar.LENGTH_LONG);
+        snackbar.setAction("UNDO", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Remove the article from the favorites list in the database
+                removeArticleFromFavorites(insertedArticleId);
+
+                // Update the favorites RecyclerView
+                updateFavoritesRecyclerView();
+
+                // Show a confirmation message
+                Snackbar.make(findViewById(android.R.id.content), "Article removed from favorites", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+        snackbar.show();
     }
+
+
 
 
     private void updateRecyclerView(List<Article> articles) {
@@ -168,20 +220,25 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
         return articles;
     }
 
-    private void addArticleToFavorites(Article article) {
+    private long addArticleToFavorites(Article article) {
         ArticleEntity articleEntity = new ArticleEntity();
         articleEntity.headline = article.getHeadline();
         articleEntity.url = article.getUrl();
         articleEntity.publicationDate = article.getPublicationDate();
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "app-database").allowMainThreadQueries().build();
-        db.articleDao().insertFavoriteArticle(articleEntity);
+        long insertedArticleId = db.articleDao().insertFavoriteArticle(articleEntity);
+        return insertedArticleId;
     }
 
-    private void removeArticleFromFavorites(ArticleEntity articleEntity) {
+    private void removeArticleFromFavorites(long articleId) {
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "app-database").allowMainThreadQueries().build();
-        db.articleDao().deleteFavoriteArticle(articleEntity);
+        ArticleEntity articleEntity = db.articleDao().getFavoriteArticleById(articleId);
+        if (articleEntity != null) {
+            db.articleDao().deleteFavoriteArticle(articleEntity);
+        }
     }
+
 
     private void updateFavoritesRecyclerView() {
         favoritesRecyclerView = findViewById(R.id.favorites_recyclerview);
@@ -198,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
     @Override
     public void onDeleteFavoriteArticleClick(ArticleEntity articleEntity) {
         // Remove the article from the favorites list in the database
-        removeArticleFromFavorites(articleEntity);
+        removeArticleFromFavorites(articleEntity.id);
 
         // Update the favorites RecyclerView
         updateFavoritesRecyclerView();

@@ -6,9 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AlertDialog;
 
 import java.util.List;
 
@@ -36,6 +41,25 @@ public class TopicsAdapter extends FavoritesAdapter {
             @Override
             public void onClick(View view) {
                 onTopicsArticleClickListener.onDeleteTopicsArticleClick(articleEntity);
+
+                // Add a Toast message
+                Toast.makeText(view.getContext(), "Article deleted from topics", Toast.LENGTH_SHORT).show();
+
+                // Show a Snackbar
+                Snackbar.make(view, "Article deleted from topics", Snackbar.LENGTH_LONG)
+                        .setAction("UNDO", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Handle the undo action
+                            }
+                        }).show();
+
+                // Show an AlertDialog
+                new AlertDialog.Builder(view.getContext())
+                        .setTitle("Article deleted")
+                        .setMessage("The article has been deleted from your topics.")
+                        .setPositiveButton("OK", null)
+                        .show();
             }
         });
 
@@ -55,7 +79,6 @@ public class TopicsAdapter extends FavoritesAdapter {
     class TopicsArticleViewHolder extends ArticleViewHolder {
         public TopicsArticleViewHolder(@NonNull View itemView) {
             super(itemView);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,3 +93,4 @@ public class TopicsAdapter extends FavoritesAdapter {
         }
     }
 }
+
