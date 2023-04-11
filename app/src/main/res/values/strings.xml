@@ -4,7 +4,8 @@
     <string name="search_button_text">Search</string>
     <string name="menu_help">Help</string>
     <string name="menu_view_topics">View Topics</string>
-
-
-
+    <string name="headline">Headline</string>
+    <string name="publicationDate">Publication Date</string>
+    <string name="addToFav">Add to favorite</string>
+    <string name="delete">Delete</string>
 </resources>

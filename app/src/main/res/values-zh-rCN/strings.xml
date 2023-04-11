@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">纽约时报应用</string>
+    <string name="search_hint">输入您要查找的标题</string>
+    <string name="search_button_text">查找</string>
+    <string name="menu_help">帮助</string>
+    <string name="menu_view_topics">浏览收藏</string>
+    <string name="headline">标题</string>
+    <string name="publicationDate">发布日其</string>
+    <string name="addToFav">收藏</string>
+    <string name="delete">删除</string>
+</resources>

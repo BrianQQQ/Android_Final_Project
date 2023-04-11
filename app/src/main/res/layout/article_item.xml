@@ -9,7 +9,7 @@
         android:id="@+id/headline_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Headline"
+        android:text="@string/headline"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -17,7 +17,7 @@
         android:id="@+id/publication_date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Publication Date"
+        android:text="@string/publicationDate"
         android:textSize="14sp"
         android:layout_below="@+id/headline_text_view"
         android:layout_alignParentStart="true"
@@ -27,7 +27,7 @@
         android:id="@+id/add_favorite_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add to Favorites" />
+        android:text="@string/addToFav" />
 
 
 </LinearLayout>
