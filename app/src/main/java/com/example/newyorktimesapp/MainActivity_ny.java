@@ -38,7 +38,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements ArticleAdapter.OnArticleClickListener, FavoritesAdapter.OnFavoriteArticleClickListener {
+public class MainActivity_ny extends AppCompatActivity implements ArticleAdapter.OnArticleClickListener, FavoritesAdapter.OnFavoriteArticleClickListener {
 
     EditText editTextSearch;
     RecyclerView recyclerView;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_ny);
         editTextSearch = findViewById(R.id.search_edit_text);
 
         // Retrieve the previously saved search term from SharedPreferences
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
                 helpDialog.show();
                 break;
             case R.id.menu_view_topics:
-                Intent topicsIntent = new Intent(MainActivity.this, TopicsActivity.class);
+                Intent topicsIntent = new Intent(MainActivity_ny.this, TopicsActivity.class);
                 startActivity(topicsIntent);
                 break;
 //            case R.id.mainPage: //back to main page
@@ -193,10 +193,10 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
         updateFavoritesRecyclerView();
 
         // Show a Toast message
-        Toast.makeText(MainActivity.this, "Article added to favorites", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity_ny.this, "Article added to favorites", Toast.LENGTH_SHORT).show();
 
         // Show an AlertDialog
-        new AlertDialog.Builder(MainActivity.this)
+        new AlertDialog.Builder(MainActivity_ny.this)
                 .setTitle("Article added")
                 .setMessage("The article has been added to your favorites.")
                 .setPositiveButton("OK", null)

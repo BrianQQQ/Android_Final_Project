@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewYorkTimesApp</string>
+<!--    <string name="app_name">NewYorkTimesApp</string>-->
     <string name="search_hint">Enter a topic</string>
     <string name="search_button_text">Search</string>
     <string name="menu_help">Help</string>
@@ -13,4 +13,33 @@
     <string name="ok">OK</string>
     <string name="info">INFO</string>
     <string name="close">Close</string>
+	<string name="app_name">FinalProject</string>
+    <string name="button_message">I\'m a button</string>
+    <string name="menu_nasa_photo">Nasa Mars Rover photos!</string>
+    <string name="project_menu_info">CST2335 Android Section012 Group3 Final Project!</string>
+    <string name="nasa_photo_text">Please enter the date</string>
+    <string name="nasa_photo_search">Search</string>
+    <string name="Nasa_Photo_Favourite">Favourite</string>
+    <string name="place_kitten">Place Kitten</string>
+    <string name="ny_times">New York Times</string>
+    <string name="weather_stack_master">WeatherStack</string>
+    <string name="menu_place_kitten">Place Kitten Placeholder images</string>
+    <string name="menu_ny_times">New York Times</string>
+    <string name="menu_weather_stack">WeatherStack</string>
+    <string name="camera_name">Camera Name:</string>
+    <string name="nasa_photo_url">Photo URL:</string>
+    <string name="nasa_photo_add_to_favourite">Add to favourite</string>
+    <string name="nasa_photo_deletion">Delete</string>
+    <string name="nasa_photo_back_to_list">Back to previous menu</string>
+    <string name="welcome_message">Welcome to Nasa Mars Photos</string>
+    <string name="favorite_photos">Favourite Nasa Mars Photos</string>
+    <string name="nasa_photo_open">Open</string>
+    <string name="nasa_photo_close">Close</string>
+    <string name="nasa_photo_author">Yikai Wang</string>
+    <string name="nasa_photo_version">Version: 1.0</string>
+    <string name="nasa_photo_title">Nasa Mars Photos</string>
+    <string name="photoSaved">Photo Saved</string>
+    <string name="duplicated_photo">Phote Already Existed</string>
+    <string name="errorMessage_1">Please input a number from 1 to 100</string>
+    <string name="nasa_photo_go_to_favourite">Go to favourite</string>
 </resources>
