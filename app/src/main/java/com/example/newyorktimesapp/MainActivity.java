@@ -287,5 +287,17 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
         updateFavoritesRecyclerView();
     }
 
+    @Override
+    public void onInfoButtonClick(Article article) {
+        // Create a new instance of ArticleInfoFragment with the article information
+        ArticleInfoFragment infoFragment = ArticleInfoFragment.newInstance(article.getHeadline(), article.getPublicationDate());
+
+        // Add the fragment to the activity
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, infoFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
 
 }

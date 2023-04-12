@@ -57,4 +57,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_results_recyclerview" />
 
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/favorites_recyclerview"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

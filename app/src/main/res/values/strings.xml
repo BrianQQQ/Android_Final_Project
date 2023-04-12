@@ -11,4 +11,6 @@
     <string name="help">HELP</string>
     <string name="help_message">Enter a search term and tap the search button to see the results.\n\nClick on an article to open it in your browser.\n\nTo save an article to your favorites, click the Add to favorite button.</string>
     <string name="ok">OK</string>
+    <string name="info">INFO</string>
+    <string name="close">Close</string>
 </resources>

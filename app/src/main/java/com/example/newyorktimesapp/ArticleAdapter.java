@@ -46,12 +46,20 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             }
         });
 
-        // Add this code inside the onBindViewHolder method
         holder.addFavoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onArticleClickListener != null) {
                     onArticleClickListener.onAddFavoriteArticleClick(article);
+                }
+            }
+        });
+
+        holder.infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onArticleClickListener != null) {
+                    onArticleClickListener.onInfoButtonClick(article);
                 }
             }
         });
@@ -65,19 +73,22 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
     class ArticleViewHolder extends RecyclerView.ViewHolder {
         TextView headlineTextView;
         TextView publicationDateTextView;
-        Button addFavoriteButton; // Add this line
+        Button addFavoriteButton;
+        Button infoButton;
 
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
             headlineTextView = itemView.findViewById(R.id.headline_text_view);
             publicationDateTextView = itemView.findViewById(R.id.publication_date_text_view);
-            addFavoriteButton = itemView.findViewById(R.id.add_favorite_button); // Add this line
+            addFavoriteButton = itemView.findViewById(R.id.add_favorite_button);
+            infoButton = itemView.findViewById(R.id.info_button);
         }
     }
 
     public interface OnArticleClickListener {
         void onArticleClick(Article article);
-        void onAddFavoriteArticleClick(Article article); // Add this line
+        void onAddFavoriteArticleClick(Article article);
         void onDeleteFavoriteArticleClick(ArticleEntity articleEntity);
+        void onInfoButtonClick(Article article); // Add this line
     }
 }
