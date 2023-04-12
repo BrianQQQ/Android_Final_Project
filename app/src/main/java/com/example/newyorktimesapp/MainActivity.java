@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
         switch (item.getItemId()) {
             case R.id.menu_help:
                 AlertDialog.Builder helpDialogBuilder = new AlertDialog.Builder(this);
-                helpDialogBuilder.setTitle("Help")
-                        .setMessage("Enter a search term and tap the search button to see the results.\n\nClick on an article to open it in your browser.\n\nTo save an article to your favorites, click the Add to favorite button.")
-                        .setPositiveButton("OK", null);
+                helpDialogBuilder.setTitle(getString(R.string.help))
+                        .setMessage(getString(R.string.help_message))
+                        .setPositiveButton(getString(R.string.ok), null);
                 AlertDialog helpDialog = helpDialogBuilder.create();
                 helpDialog.show();
                 break;
@@ -115,6 +115,34 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
                 Intent topicsIntent = new Intent(MainActivity.this, TopicsActivity.class);
                 startActivity(topicsIntent);
                 break;
+//            case R.id.mainPage: //back to main page
+//                Intent intent_main = new Intent(MarsRoverPhotosView.this, MainActivity.class);
+//                startActivity(intent_main);
+//                break;
+//            case R.id.gallery:
+//                Intent intent1 = new Intent(MarsRoverPhotosView.this, GalleryActivity.class);
+//
+//                startActivity(intent1);
+//
+//                break;
+//
+//            case R.id.tokitten:
+//                Intent intent = new Intent(MarsRoverPhotosView.this, KittenImages.class);
+//
+//                startActivity(intent);
+//                break;
+//            case R.id.toweather:
+//
+//                Intent intent5 = new Intent(MarsRoverPhotosView.this, WeatherStack.class);
+//
+//                startActivity(intent5);
+//                break;
+//            case R.id.tomarsphoto:
+//
+//                Intent intent6 = new Intent(MarsRoverPhotosView.this, MarsRoverPhotosView.class);
+//
+//                startActivity(intent6);
+//                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -191,8 +219,6 @@ public class MainActivity extends AppCompatActivity implements ArticleAdapter.On
         });
         snackbar.show();
     }
-
-
 
 
     private void updateRecyclerView(List<Article> articles) {

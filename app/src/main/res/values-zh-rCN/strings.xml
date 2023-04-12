@@ -9,4 +9,7 @@
     <string name="publicationDate">发布日其</string>
     <string name="addToFav">收藏</string>
     <string name="delete">删除</string>
+    <string name="help">帮助</string>
+    <string name="help_message">输入搜索词并点击搜索按钮查看结果。\n\n点击文章在浏览器中打开它。\n\n要将文章保存到收藏夹，请点击添加到收藏夹按钮。</string>
+    <string name="ok">好</string>
 </resources>
